@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function FilmCard({src, size, onClick}){
+import { CONSTANTS } from "../Constants/constants";
+const {FILMCARD_SMALLHEIGHT, FILMCARD_SMALLWIDTH, FILMCARD_HEIGHT, FILMCARD_WIDTH} = CONSTANTS.MEDIDAS;
+
+export default function FilmCard({src, size, onClick, DrivenIdentifier}){
 
     return(
-        <Style size={size} onClick={onClick}>
+        <Style size={size} onClick={onClick} data-identifier={DrivenIdentifier}>
             <ImageFilm src={src} size={size}/>
         </Style>
     )
@@ -18,8 +21,6 @@ const Style = styled.div`
     border-radius: 3px;
 `;
 const ImageFilm = styled.img`
-    ${props => {
-        if(props.size === "small") return "width: 48px; height: 72px;"
-        else return "width: 129px; height: 193px;" 
-    }}
+    width: ${({size}) => (size === "small")? FILMCARD_SMALLWIDTH: FILMCARD_WIDTH };
+    height: ${({size}) => (size === "small")? FILMCARD_SMALLHEIGHT: FILMCARD_HEIGHT };
 `;

@@ -6,10 +6,10 @@ import FilmCard from "../FilmCard/FilmCard";
 export default function Footer({srcImg, title, date}){
     return (
         <Style>
-            <FilmCard src={srcImg} size="small" />
+            <FilmCard DrivenIdentifier="movie-img-preview" src={srcImg} size="small" />
             <div className="titles">
-                <p>{title}</p>
-                <p>{date}</p>
+                <p data-identifier="movie-and-session-infos-preview">{title}</p>
+                <p data-identifier="movie-and-session-infos-preview">{date}</p>
             </div>
         </Style>
     );
@@ -24,6 +24,6 @@ const Style = styled.div`
     height: 117px;
     width: 100%;
 
-    position: sticky;
+    position: fixed;
     bottom: 0;
 `;

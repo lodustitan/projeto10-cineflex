@@ -1,44 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
+
+import FinalTicket from "../Session/FinalTicket";
 import Button from "../Buttons/Button";
 
-export default function Sucess({globalTicket}){
+import { useNavigate } from "react-router-dom";
 
-    const [sessionState, setSessionState] = React.useState( JSON.parse(sessionStorage.current) );
-    
-    function link(id){
-        window.location.href = `/`;
-    }
-    function formataCPF(cpf){
-        cpf = cpf.replace(/[^\d]/g, "");
-        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-    }
+export default function Sucess(){
+
+    const navigate = useNavigate();
+    const [sessionState] = React.useState( JSON.parse(sessionStorage.current) );
 
     return (
         <Style>
             <div className="title">Pedido feito com sucesso!</div>
             <div className="infoList">
-            {sessionState.film_name && <>
-                <div className="row">
+                <div className="row" data-identifier="movie-session-infos-reserve-finished">
                     <p>Filme e sessão</p>
-                    <span>{sessionState.film_name}</span>
-                    <span>{sessionState.film_date}</span>
+                    <span>{sessionState && sessionState.film_name}</span>
+                    <span>{sessionState && sessionState.film_date}</span>
                 </div>
-                <div className="row">
-                    <p>Ingressos</p>
-                    {sessionState.seats.map(a=> {
-                        return <span>Assento {a}</span>
-                    })}
-                </div>
-                <div className="row">
-                    <p>Comprador</p>
-                    <span>Nome: {sessionState.user_name}</span>
-                    <span>CPF: {formataCPF(sessionState.user_cpf)}</span>
-                </div>
-            </>}
+                { sessionState && sessionState.tickets.map( (data, keyID) => <FinalTicket key={keyID} name={data.nome} cpf={data.cpf} assento={data.idAssento} /> ) }
             </div>
-            <Button onClick={link}>Voltar pra Home</Button>
+            <Button DrivenIdentifier="back-to-home-btn" onClick={() => navigate("/")}>Voltar pra Home</Button>
         </Style>
     )
 }
@@ -46,6 +31,7 @@ export default function Sucess({globalTicket}){
 const Style = styled.div`
     display: flex; justify-content: flex-start; align-items: center;
     flex-direction: column;
+    margin-top: 70px;
 
     * {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif}
     

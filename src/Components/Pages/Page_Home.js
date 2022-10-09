@@ -4,12 +4,15 @@ import axios from "axios";
 
 import FilmCard from "../FilmCard/FilmCard";
 
+import { CONSTANTS } from "../Constants/constants";
+const { BASE_URL } = CONSTANTS.API; 
+
 export default function Home(){
 
     const [filmList, setFilmList] = React.useState([]);
 
     React.useEffect(() =>{
-        axios.get("https://mock-api.driven.com.br/api/v5/cineflex/movies")
+        axios.get(`${BASE_URL}/movies`)
         .then((res)=>{
             setFilmList(res.data);
         })
@@ -24,7 +27,7 @@ export default function Home(){
             <div className="title">Selecione o filme</div>
             <div className="filmList">
                 {filmList.map((data, keyID) =>{
-                    return <FilmCard src={data.posterURL} key={keyID} onClick={() => { link(data.id) }} />
+                    return <FilmCard DrivenIdentifier="movie-outdoor" src={data.posterURL} key={keyID} onClick={() => { link(data.id) }} />
                 })}
             </div>
         </Style>

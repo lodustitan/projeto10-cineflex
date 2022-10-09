@@ -1,21 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function SeatButton({children, theme, onClick, noCanClick}){
+export default function SeatButton({valueProp, theme, onClick, noCanClick, dadInfos, dataInfo, DrivenIdentifier}){
 
-    const [value, setValue] = React.useState(false);
-    
-    function select(){
-        setValue(!value);
-    }
+    const [selected, setSelected] = React.useState(false);
+    const [value] = React.useState(valueProp);
+
+    React.useEffect( () => {
+        if(dataInfo){
+            dataInfo.seats.some( someone => {
+                if(someone.name === value){
+                    setSelected(someone.isSelected);
+                }
+            })
+        }
+    }, [dataInfo]);
+
 
     return (
-        <Style noCanClick={noCanClick} theme={theme} selected={value} onClick={() => { 
+        <Style data-identifier={DrivenIdentifier} noCanClick={noCanClick} theme={theme} selected={selected} onClick={() => { 
             if(noCanClick || theme === "unavailable") return;
-            select();
-            onClick();
+            dadInfos.selectSeat(value);
         }}>
-            {children}
+            {value}
         </Style>
     )
 }

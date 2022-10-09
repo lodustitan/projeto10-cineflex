@@ -1,30 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import Button from "../Buttons/Button";
+import HoursSelection from "./HoursSelection";
 
 export default function FilmHours({datainfo}){
-
-    function link(id){
-        window.location.href = `/session/${id}`;
-    }
-
+    
     return(
         <Style>
-            {(datainfo.days) && datainfo.days.map((data, keyId) =>{ 
-                return(<>
-                    <div>
-                        <span>{data.weekday}</span>
-                        {" - "}
-                        <span>{data.date}</span>
-                    </div>
-                    <div>
-                        {data.showtimes.map((a, akey)=>{
-                            return <Button onClick={()=> link(a.id)} key={akey} margin="6px 12px 12px 0">{a.name}</Button>
-                        })}
-                    </div>
-                </>)
-                })
+            {(datainfo.days) && datainfo.days.map((data, keyId) => <HoursSelection key={keyId} data={data}/>)
             }
         </Style>
     )
