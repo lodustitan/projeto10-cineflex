@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export default function FormSession({buyers, currentSeat}){
 
-    const [seat, setSeat] = React.useState(currentSeat);
+    const [seat] = React.useState(currentSeat);
     const [input_name, setInput_name] = React.useState("");
     const [input_cpf, setInput_cpf] = React.useState("");
 
@@ -11,24 +11,28 @@ export default function FormSession({buyers, currentSeat}){
 
     function changeHandler(value, campo, setstate){
         setstate(value);
-        const [ updateBuyerInfo ] = buyersInfo.filter(fill => fill.seatID === seat);
-        const updateBuyerInfo2 = buyersInfo.filter(fill => fill.seatID !== seat);
 
-        updateBuyerInfo[campo] = (campo==='name')? input_name: input_cpf;
-        setBuyersInfo([...updateBuyerInfo2, updateBuyerInfo]);
-    } 
+        const updateBuyer = [...buyersInfo];
+        updateBuyer.some((st) =>{
+            if(st.seatID === seat){ 
+                st[campo] = value;
+            }
+        })
+
+        setBuyersInfo(updateBuyer);
+    }
 
     return(
         <Style> 
             <span>Assento {seat}</span>
             <div className="block">
                 <label>Nome do comprador:</label>
-                <input data-identifier="buyer-name-input" type="text" placeholder="Digite seu nome..." value={input_name} onChange={(e)=>changeHandler(e.target.value, 'name', setInput_name)} />
+                <input data-identifier="buyer-name-input" type="text" placeholder="Digite seu nome..." onChange={(e)=>changeHandler(e.target.value, 'name', setInput_name)} />
             </div>
 
             <div className="block">
                 <label>CPF do comprador:</label>
-                <input data-identifier="buyer-cpf-input" type="text" placeholder="Digite seu CPF..." value={input_cpf} onChange={(e)=>changeHandler(e.target.value, 'cpf', setInput_cpf)} />
+                <input data-identifier="buyer-cpf-input" type="text" placeholder="Digite seu CPF..." onChange={(e)=>changeHandler(e.target.value, 'cpf', setInput_cpf)} />
             </div>
         </Style>
     )

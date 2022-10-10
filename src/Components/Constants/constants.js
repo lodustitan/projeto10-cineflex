@@ -6,6 +6,6 @@ export const CONSTANTS = {
         FILMCARD_SMALLHEIGHT: "72px"
     },
     API: {
-        BASE_URL: "https://mock-api.driven.com.br/api/v8/cineflex"
+        BASE_URL: "https://mock-api.driven.com.br/api/v5/cineflex"
     }
 }

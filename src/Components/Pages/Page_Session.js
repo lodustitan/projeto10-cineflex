@@ -35,13 +35,16 @@ export default function Session(){
         axios.post(
             `${BASE_URL}/seats/book-many`,
             {ids: idList, compradores: [...b_List]})
-        .then(() => { 
+        .then(res => { 
             sessionStorage.current = JSON.stringify({
                 film_name: seatsList.movie.title,
                 film_date: seatsList.day.date + " - " + seatsList.day.weekday,
                 tickets: b_List
             });
             navigate(`/sucesso`);
+        })
+        .catch(err =>{
+            console.log(err);
         })
     }
 
